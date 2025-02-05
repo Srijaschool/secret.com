@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    meta
+  </head>
+  <body>
+    vvvvvv
+    from sklearn.feature_extraction.text import CountVectorizer 
+from sklearn.tree import DecisionTreeClassifier
+
+positive_texts = ["Love the new changes", "Big difference","Improved things", "Exciting changes", "Feel supported", "like it","not bad","comfortable"]
+
+negative_texts = ["Don't like the changes", "Made things worse","Frustrating changes", "Feel unsupported", "Causing problems", "hate it", "not good","don't like"]
+
+neutral_texts = [ "Mixed feelings", "Doesn't affect me much", "No strong feelings", "Haven't noticed any changes", "Changes are okay", "Just a part of school life", "The new changes are okay but not great","Its okay"]
+
+training_texts = positive_texts +negative_texts + neutral_texts
+
+training_labels = ["positive"] * len(positive_texts) + ["negative"] * len(neutral_texts) + ["neutral"] * len (neutral_texts)
+
+vectorizer = CountVectorizer()
+vectorizer.fit (training_texts)
+training_vectors = vectorizer.transform (training_texts)
+classifier = DecisionTreeClassifier()
+classifier.fit (training_vectors, training_labels)
+
+def sentiment_classification(text):
+    text_vector = vectorizer.transform([text])
+    prediction = classifier.predict(text_vector)
+    sentiment = prediction[0]
+    return sentiment
+
+while True:
+    test_text = input("Enter text:")
+    prediction =     sentiment_classification (test_text)
+    print(" The sentiment of '" + test_text + "is: " + prediction)
+    
+   
+
+  </body>
+</html>
